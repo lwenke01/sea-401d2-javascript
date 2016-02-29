@@ -1,4 +1,4 @@
 sea-401d2-javascript 
 ====================
 
-[week1](week1/)
+[week-1](week1/)
