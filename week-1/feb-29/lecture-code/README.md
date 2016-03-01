@@ -9,7 +9,7 @@ Modular Patterns
 console.log('hello world');
 ```
 
-# module.expports
+# module.exports
 * **greet.js**
 ``` javascript
 'use strict';
