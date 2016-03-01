@@ -46,6 +46,7 @@ console.log(greet('unicorn'));
 * `npm install chai`
 * **test/greet-test.js**
 ``` javascript
+'use strict';
 var greet = require(__dirname + '/../2-greet-module-exports');
 var greet2 = require(__dirname + '/../3-greet-exports.js').greet;
 
