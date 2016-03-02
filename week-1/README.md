@@ -2,20 +2,19 @@ week-1
 ======
 ## class-1, Monday - Feb 29
 ### modular patterns
+ * requrie
+ * module.exports vs. exports
+ * \_\_dirname
+  
+### Testing
 * Mocha
   * It/Describte Blocks
 * Chai
   * expect
-* Testing
-
-### Require
- * \_\_dirname
- * Module.exports .vs exports
 
 ### Demos
 * Modular Patterns
-* Basic testing
-* Debugger
+* Basic Testing
 
 ### Assignments
 * Greet Program
