@@ -6,5 +6,5 @@ var greet = module.exports = function(name){
   return 'hello ' + name;
 }
 
-console.log(greet('from greet'));
+console.log(greet('slugs and unicons'));
 
