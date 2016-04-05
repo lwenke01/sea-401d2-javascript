@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      .currentTab {
+        border: solid
+      }
+    </style>
+  </head>
+  <body ng-init="tab = 'home'">
+    <div ng-controller='PeopleController as peoplectrl'>
+      <section ng-repeat='person in peoplectrl.people'>
+        Name: {{person.name}}
+        Age: {{person.age}}
+      </section>
+    </div>
+    <!--
+    <header>
+      <nav>
+        <a ng-click="tab = 'home'" ng-class="{currentTab: tab == 'home'}">Home</a>
+        <a ng-click="tab = 'about'" ng-class="{currentTab: tab == 'about'}">About</a>
+        <a ng-click="tab = 'store'" ng-class="{currentTab: tab == 'store'}">Store</a>
+        <a ng-click="tab = 'big'" ng-class="{currentTab: tab == 'big'}">More Biggieness</a>
+      </nav>
+    </header>
+
+    <main>
+      {{tab}}
+      <section ng-show="tab == 'home'">
+        Welcome Home!
+        <p> a nested tag </p>
+      </section>
+      <section ng-show="tab == 'about'">
+        All about us
+      </section>
+      <section ng-show="tab == 'store'">
+        Check out our wares!
+      </section>
+      <section ng-show="tab == 'big'">
+        Grant us more Biggieness
+      </section>
+    </main>
+    -->
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>

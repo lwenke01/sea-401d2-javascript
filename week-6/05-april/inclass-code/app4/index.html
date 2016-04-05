@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      .currentTab {
+        border: solid
+      }
+    </style>
+  </head>
+  <body ng-controller="PanelController as panel">
+    {{panel.tab}}
+	<header>
+	  <nav>
+        <a ng-click="panel.setTab('home')" ng-class="{currentTab: panel.isActive('home')}">Home</a>
+        <a ng-click="panel.setTab('about')" ng-class="{currentTab: panel.isActive('about')}">About</a>
+        <a ng-click="panel.setTab('store')" ng-class="{currentTab: panel.isActive('store')}">Store</a>
+        <a ng-click="panel.setTab('big')" ng-class="{currentTab: panel.isActive('big')}">More Biggieness</a>
+	  </nav>
+    <main>
+      <section ng-show="panel.isActive('home')">
+        Welcome Home!
+        <p> a nested tag </p>
+      </section>
+      <section ng-show="panel.isActive('about')">
+        All about us
+      </section>
+      <section ng-show="panel.isActive('store')">
+        Check out our wares!
+      </section>
+      <section ng-show="panel.isActive('big')">
+        Grant us more Biggieness
+      </section>
+    </main>
+    <script src="./bower_components/angular/angular.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
