@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body data-ng-app="PeopleApp">
+  <main data-ng-init="peoplectrl.getPeople()" data-ng-controller="PeopleController as peoplectrl">
+    <ul>
+      <li data-ng-repeat="person in peoplectrl.people">{{person.name}}
+        <button data-ng-click="peoplectrl.removePerson(person)">Delete</button>
+      </li>
+    </ul>
+    <form data-ng-submit="peoplectrl.createPerson(newPerson)">
+      <input type="text" data-ng-model="newPerson.name"/>
+      <button type="submit">New Person</button>
+    </form>
+  </main>
+  <script src="./bundle.js"></script>
+</body>
+</html>
