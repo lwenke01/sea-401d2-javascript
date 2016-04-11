@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="UTF-8">
+    <title> My first Modular app </title>
+  </head>
+  <body>
+    {{'hello'}}
+    <section ng-controller="PenguinController as penguin">
+      <section ng-controller="SalmonController as salmon">
+        {{salmon.freshness}}
+        {{penguin.name}}
+      </section>
+    </section>
+    <script src="./bower_components/angular/angular.js"></script>
+
+    <script src="./js/penguins/penguins-module.js"></script>
+    <script src="./js/penguins/penguins.js"></script>
+
+    <script src="./js/salmons/salmons.js"></script>
+
+    <script src="./js/app.js"></script>
+  </body>
+</html>
