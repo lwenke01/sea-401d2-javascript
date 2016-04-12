@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <title>My First Angular Test</title>
+  </head>
+  <body>
+    <section ng-controller="NameController as namectrl">
+      <input ng-model="namectrl.firstName">
+      <input ng-model="namectrl.lastName">
+      <p>{{namectrl.fullName}}</p>
+      <button ng-click="namectrl.update()">Update Name</button>
+    </section>
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
