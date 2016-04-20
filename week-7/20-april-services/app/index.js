@@ -1,20 +1,43 @@
 const angular = require('angular');
 
 const app = angular.module('PeopleApp', [])
-app.controller('PeopleController', ['$http', function($http) {
+
+require('./js/services/count_service')(app);
+require('./js/services/http_service')(app);
+
+app.controller('PeopleController', ['$http', 'CountService', 'ResourceService',
+    function($http, CountService, ResourceService) {
+
     const mainRoute = 'http://localhost:3000/people';
     const vm = this;
+    const peopleResource = ResourceService('people');
+
+    console.log(peopleResource)
 
     vm.people = ['person'];
+    vm.count = CountService.getCount();
+
+    vm.shouldShow = CountService.getShow();
+
+    vm.show = function() {
+      CountService.show();
+      vm.shouldShow = CountService.getShow();
+    }
+
+    vm.increment = function() {
+      CountService.increment();
+      vm.count = CountService.getCount();
+    }
+
     vm.getPeople = function() {
-      $http.get(mainRoute)
+      peopleResource.getAll()
         .then(function (result) {
             vm.people = result.data.people;
           });
     };
 
     vm.createPerson = function(person) {
-      $http.post(mainRoute, person)
+      peopleResource.create(person)
         .then(function(res){
           vm.people.push(res.data);
           vm.newPerson = null;
@@ -22,14 +45,14 @@ app.controller('PeopleController', ['$http', function($http) {
     };
 
     vm.removePerson = function(person) {
-      $http.delete(mainRoute + '/' + person._id)
+      peopleResource.remove(person)
         .then(function(res){
           vm.people = vm.people.filter((p) => p._id != person._id);
         });
     };
 
     vm.updatePerson = function(person) {
-      $http.put(mainRoute + '/' + person._id, person)
+      peopleResource.update(person)
         .then((res) => {
           person.editing = false;
         }, (err) => console.log(err))
@@ -46,3 +69,22 @@ app.controller('PeopleController', ['$http', function($http) {
     }
 
   }]);
+
+app.controller('SecondController', function(CountService) {
+    var vm = this;
+    vm.count = CountService.getCount();
+
+    vm.shouldShow = CountService.getShow();
+
+    vm.show = function() {
+      CountService.show();
+      vm.shouldShow = CountService.getShow();
+    }
+
+    vm.increment = function() {
+      CountService.increment();
+      vm.count = CountService.getCount();
+    }
+})
+
+

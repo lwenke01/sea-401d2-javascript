@@ -12,6 +12,10 @@
 <body data-ng-app="PeopleApp">
   <main data-ng-cloak data-ng-init="peoplectrl.getPeople()"
     data-ng-controller="PeopleController as peoplectrl">
+    <h1>{{peoplectrl.count}}</h1>
+    <button data-ng-click="peoplectrl.increment()">+</button>
+    <h1 ng-if="peoplectrl.shouldShow">SHOW THIS</h1>
+    <button ng-click="peoplectrl.show()">show from service</button>
     <ul>
       <li data-ng-repeat="person in peoplectrl.people">{{person.name}}
         <button data-ng-click="peoplectrl.removePerson(person)">Delete</button>
@@ -27,6 +31,11 @@
       <input type="text" data-ng-model="peoplectrl.newPerson.name"/>
       <button type="submit">New Person</button>
     </form>
+  </main>
+  <main data-ng-controller="SecondController as secondctrl">
+    <h1>{{secondctrl.count}}</h1>
+    <button ng-click="secondctrl.increment()">+</button>
+
   </main>
   <script src="./bundle.js"></script>
 </body>
