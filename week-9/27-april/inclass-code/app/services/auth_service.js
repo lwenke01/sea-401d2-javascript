@@ -3,16 +3,43 @@ module.exports = function(app) {
     var token;
     var url = 'http://localhost:3000'
     var auth = {
-      createUser(user) {
+      createUser(user, cb) {
+        cb || function() {};
         $http.post(url + '/signup', user)
           .then((res) => {
             token = $window.localStorage.token = res.data.token;
+            cb(null, res)
+          }, (err) => {
+            cb(err)
           })
       },
       getToken() {
         return token || $window.localStorage.token;
+      },
+      signOut(cb) {
+        token = null;
+        $window.localStorage.token = null;
+        if (cb) cb();
+      },
+      signIn(user, cb) {
+        cb || function() {};
+        $http.get(url + '/signin', {
+          headers: {
+            authorization: 'Basic ' + btoa(user.email + ':' + user.password)
+          }
+        }).then((res) => {
+          token = $window.localStorage.token = res.data.token;
+          cb(null, res);
+        }, (err) => {
+          cb(err);
+        })
       }
     }
     return auth;
   }])
 };
+
+
+
+
+

@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const webpack = require('webpack-stream');
 
 const sources = {
-  html: __dirname + '/app/index.html',
+  html: __dirname + '/app/**/*.html',
   js: __dirname + '/app/index.js',
   test: __dirname + '/test/*_spec.js'
 };
