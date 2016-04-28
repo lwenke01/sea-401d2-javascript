@@ -6,7 +6,7 @@ const jwtAuth = require(__dirname + '/../lib/jwt_auth');
 
 var peopleRouter = module.exports = exports = express.Router();
 
-peopleRouter.get('/people', (req, res) => {
+peopleRouter.get('/people', jwtAuth, (req, res) => {
   Person.find({}, (err, data) => {
     if (err) return handleDBError(err, res);
 
@@ -15,7 +15,7 @@ peopleRouter.get('/people', (req, res) => {
 });
 
 
-peopleRouter.post('/people', jsonParser, (req, res) => {
+peopleRouter.post('/people', jsonParser, jwtAuth, (req, res) => {
   var newPerson = new Person(req.body);
   newPerson.save((err, data) => {
     if (err) return handleDBError(err, res);
@@ -24,7 +24,7 @@ peopleRouter.post('/people', jsonParser, (req, res) => {
   });
 });
 
-peopleRouter.put('/people/:id', jsonParser, (req, res) => {
+peopleRouter.put('/people/:id', jsonParser, jwtAuth, (req, res) => {
   var PersonData = req.body;
   delete PersonData._id;
   Person.update({_id: req.params.id}, PersonData, (err) => {
@@ -34,7 +34,7 @@ peopleRouter.put('/people/:id', jsonParser, (req, res) => {
   });
 });
 
-peopleRouter.delete('/people/:id', (req, res) => {
+peopleRouter.delete('/people/:id', jwtAuth, (req, res) => {
   Person.remove({_id: req.params.id}, (err) => {
     if (err) return handleDBError(err, res);
 

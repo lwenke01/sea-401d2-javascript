@@ -1,15 +1,19 @@
 const angular = require('angular');
 
-const app = angular.module('PeopleApp', [])
-
 require('angular-route')
-require('./services/auth_service')(app);
 
-app.controller('PeopleController', ['AuthService','$http' ,function(AuthService, $http) {
+const app = angular.module('PeopleApp', ['ngRoute']);
+
+require('./services/auth_service')(app);
+require('./services/error_service')(app);
+
+app.controller('PeopleController', ['AuthService','$http', '$location', 'ErrorService',
+    function(AuthService, $http, $location, ErrorService) {
     const mainRoute = 'http://localhost:3000/people';
     const vm = this;
     vm.people = [];
-
+    vm.error = ErrorService();
+    console.log(vm.error);
     vm.people = ['person'];
     vm.getPeople = function() {
       $http.get(mainRoute, {
@@ -18,7 +22,11 @@ app.controller('PeopleController', ['AuthService','$http' ,function(AuthService,
         }
       })
         .then(function (result) {
+            vm.error = ErrorService(null);
             vm.people = result.data;
+          }, (err) => {
+            vm.error = ErrorService('Please Sign In');
+            $location.path('/signup');
           });
     };
 
@@ -66,20 +74,40 @@ app.controller('PeopleController', ['AuthService','$http' ,function(AuthService,
         person.editing = false;
       }
     }
-    vm.signUp = function(user){
-      AuthService.createUser(user);
+
+    vm.signUp = function(user) {
+      AuthService.createUser(user, function(err, res) {
+        if (err) return vm.error = ErrorService('Problem Creating User');
+        vm.error = ErrorService(null);
+        $location.path('/home');
+      });
+    }
+
+    vm.signOut = function() {
+      AuthService.signOut(() => {
+        $location.path('/signup');
+      });
+    }
+    vm.signIn = function(user) {
+      AuthService.signIn(user, (err, res) => {
+        if (err) return vm.error = ErrorService('Problem Signing In');
+        vm.error = ErrorService(null);
+        $location.path('/home');
+      })
     }
 
   }]);
-  app.config(['$routeProvider', function(router){
-    Router.when('/signup', {
+
+app.config(['$routeProvider', function(router) {
+  router
+    .when('/signup', {
       controller: 'PeopleController',
       controllerAs: 'peoplectrl',
       templateUrl: 'views/signup_in.html'
     })
-    // .when('/home', {
-    //   controller: 'PeopleController',
-    //   controllerAs: 'peopleCtrl',
-    //   templateUrl: 'views/home.html'
-    // })
-  }])
+    .when('/home', {
+      controller: 'PeopleController',
+      controllerAs: 'peoplectrl',
+      templateUrl: 'views/home.html'
+    })
+}])
