@@ -18,7 +18,7 @@ peopleRouter.get('/people', (req, res) => {
 peopleRouter.post('/people', jsonParser, (req, res) => {
   var newPerson = new Person(req.body);
   newPerson.save((err, data) => {
-    if (err) return handleDBError(err, res);    
+    if (err) return handleDBError(err, res);
 
     res.status(200).json(data);
   });
